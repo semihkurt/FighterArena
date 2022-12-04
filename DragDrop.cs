@@ -1,55 +1,103 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Canvas canvas;
-    [SerializeField] public Item item;
 
+    public event System.Action<PointerEventData> OnBeginDragHandler;
+
+    public event System.Action<PointerEventData> OnDragHandler;
+
+    public event System.Action<PointerEventData, bool> OnEndDragHandler;
+
+    public bool FollowCursor {get; set; } = true;
+    public bool CanDrag {get; set; } = true;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
-
+    private Vector3 startPosition;
 
     private void Awake() {
         rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
+
+        startPosition = rectTransform.anchoredPosition;
+    }
+
+    private void Update() {
+        /*if(this.gameObject.GetComponent<ItemBase>().item == null)
+        {
+            CanDrag = false;          
+        }else
+        {
+            CanDrag = true;
+        }*/
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
-        canvasGroup.alpha = .6f;
-        canvasGroup.blocksRaycasts = false;
+        if(!CanDrag)
+            return;
+        Debug.Log("DragDrop OnBeginDrag");
+        //canvasGroup.alpha = .6f;
+        //canvasGroup.blocksRaycasts = false;
+
+        OnBeginDragHandler?.Invoke(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if(!CanDrag)
+            return;
+
+        if(FollowCursor)
+            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+
+        //OnDragHandler.Invoke(eventData);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnEndDrag");
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
-    }
+        if(!CanDrag)
+        {
+            return;
+        }   
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        //Debug.Log("OnPointerDown");
-    }
+        var results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(eventData, results);
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        Debug.Log("Dragdrop OnDrop");
-        Debug.Log ("DragDrop: OnPointerEnter="+eventData.pointerEnter.transform.parent.name);
-        Debug.Log ("DragDrop: OnPointerEnter="+eventData.pointerEnter.transform.parent.parent.name);
-        Debug.Log ("DragDrop: OnPointerEnter="+eventData.pointerDrag.transform.parent.name);
-        Debug.Log ("DragDrop: OnPointerEnter="+eventData.pointerDrag.transform.parent.parent.name);
-            
-        //We dont want to implement drop on here, but instead of item slot. So lets make a new script
-        throw new System.NotImplementedException();
+        DropArea dropArea = null;
+
+		foreach (var result in results)
+		{
+			dropArea = result.gameObject.GetComponent<DropArea>();
+
+			if (dropArea != null)
+			{
+				break;
+			}
+		}
+
+		if (dropArea != null)
+		{
+			if (dropArea.Accepts(this))
+			{
+                Debug.Log("Drop!!");
+				dropArea.Drop(this);
+				OnEndDragHandler?.Invoke(eventData, true);
+				return;
+			}
+		}
+
+        //canvasGroup.alpha = 1f;
+        //canvasGroup.blocksRaycasts = true;
+        Debug.Log("OnEndDrag");
+		rectTransform.anchoredPosition = startPosition;
+        OnEndDragHandler?.Invoke(eventData, false);
+		
     }
 }
