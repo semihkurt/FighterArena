@@ -26,6 +26,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         canvasGroup = GetComponent<CanvasGroup>();
 
         startPosition = rectTransform.anchoredPosition;
+        //Debug.Log("Start pos:" + startPosition);
     }
 
     private void Update() {
@@ -91,7 +92,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 				OnEndDragHandler?.Invoke(eventData, true);
 				return;
 			}
-		}
+		} 
 
         //canvasGroup.alpha = 1f;
         //canvasGroup.blocksRaycasts = true;
@@ -99,5 +100,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 		rectTransform.anchoredPosition = startPosition;
         OnEndDragHandler?.Invoke(eventData, false);
 		
+    }
+
+    public void MoveToTheStartPosition()
+    {
+        rectTransform.anchoredPosition = startPosition;
     }
 }

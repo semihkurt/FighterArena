@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class InventorySlot : MonoBehaviour
 {
     protected DropArea dropArea;
-    private DragDrop currentItem = null;
 	private DisableDropCondition disableDropCondition;
 
     protected virtual void Awake() 
@@ -45,46 +44,61 @@ public class InventorySlot : MonoBehaviour
         draggableItemBase = draggable.gameObject.GetComponent<ItemBase>();  
         if(draggableItemBase)
         {
-            
-            //Debug.Log("draggableItemBase is accessed");
-
             GameObject parentGameObject = this.gameObject.transform.parent.gameObject;
-            Debug.Log("This name: " + this.gameObject.name + " ,This' Parent : " + parentGameObject.name);
-            Debug.Log("Draggable name: " + draggable.name + " ,Draggable's Parent: " + draggable.transform.parent.name);
-            if(parentGameObject.name == "InventoryGrid" && draggable.transform.parent.name != "ItemShop") //It means it is really adding into the inventory
-            {
-                //Debug.Log("It is really purchased");
-            }
-            
-            GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
-            Image image = childObject.GetComponentInChildren<Image>();
-            ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
-            itemBaseScript.item = draggableItemBase.item;
-            image.enabled = true;
-            image.sprite = itemBaseScript.item.ItemSprite;
 
-            draggableItemBase.item = null;
-            Image draggableImage = draggable.gameObject.GetComponent<Image>();
-            if(draggableImage)
+            string draggableGrandparentName = draggable.transform.parent.parent.name;
+            string thisParentName = parentGameObject.name;
+            //Debug.Log("This name: " + this.gameObject.name + " ,This' Parent : " + thisParentName);
+            //Debug.Log("Draggable name: " + draggable.name + " ,Draggable's Parent: " + draggable.transform.parent.name);
+            //Debug.Log("Draggable's parent's parent name: " + draggableGrandparentName);
+           
+            if(thisParentName == "InventoryGrid" && draggableGrandparentName == "ItemShop") //It means it is really adding into the inventory and must bought!!
             {
-                draggableImage.sprite = null;
-                draggableImage.enabled = false;
-            }
+                ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
+                if(itemBaseScript.item != null)
+                {
+                    Debug.Log("This slot is already filled!");
+                    draggable.MoveToTheStartPosition();
+                    return;
+                }
 
-            Destroy(draggableItemBase.item);
+                bool isEnoughCoinWeHave = CoinManager.instance.BuyItem(draggableItemBase.item);
+                if(isEnoughCoinWeHave)
+                {
+                    GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
+                    Image image = childObject.GetComponentInChildren<Image>();                    
+                    itemBaseScript.item = draggableItemBase.item;
+                    image.enabled = true;
+                    image.sprite = itemBaseScript.item.ItemSprite;
+
+                    draggableItemBase.item = null;
+                    Image draggableImage = draggable.gameObject.GetComponent<Image>();
+                    if(draggableImage)
+                    {
+                        draggableImage.sprite = null;
+                        draggableImage.enabled = false;
+                    }
+
+                    Destroy(draggableItemBase.item);
+                }else{
+                    draggable.MoveToTheStartPosition();
+                }
+            }else{ //Draggable item will be moved to anchor position
+                draggable.MoveToTheStartPosition();
+            }
         }
 	}
 
     public void UpdateSlot()
     {
-        if(Inventory.instance.itemList[transform.GetSiblingIndex()] != null)
+        /*if(Inventory.instance.itemList[transform.GetSiblingIndex()] != null)
         {
             //icon.GetComponent<Image>().sprite = Inventory.instance.itemList[transform.GetSiblingIndex()].icon;
             //icon.SetActive(true);
         }else
         {
             //icon.SetActive(false);
-        }
+        }*/
     }
 
     //Current item is being dragged so we listen for the EndDrag event
