@@ -58,4 +58,17 @@ public class CoinManager : MonoBehaviour
         }
         return false;
     }
+
+    public bool BuyFighter(Fighter fighter)
+    {
+        Debug.Log("We have: " + _coin + " in our pockets, and fighter " + fighter.FighterName + " costs us: " + fighter.FighterPrice);            
+        if(_coin > fighter.FighterPrice)
+        {
+            _coin -= fighter.FighterPrice;
+            coinText.text = _coin.ToString();
+           // Inventory.instance.AddItem(fighter);
+            return true;      
+        }
+        return false;
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class FighterSlot : MonoBehaviour
 {
     protected DropArea dropArea;
 	private DisableDropCondition disableDropCondition;
@@ -40,9 +40,9 @@ public class InventorySlot : MonoBehaviour
 		//dropArea.DropConditions.Add(disableDropCondition);
 		//draggable.OnBeginDragHandler += CurrentItemOnBeginDrag;
 
-        ItemBase draggableItemBase = null;
-        draggableItemBase = draggable.gameObject.GetComponent<ItemBase>();  
-        if(draggableItemBase)
+        FighterBase draggableFighterBase = null;
+        draggableFighterBase = draggable.gameObject.GetComponent<FighterBase>();  
+        if(draggableFighterBase)
         {
             GameObject parentGameObject = this.gameObject.transform.parent.gameObject;
 
@@ -52,26 +52,26 @@ public class InventorySlot : MonoBehaviour
             //Debug.Log("Draggable name: " + draggable.name + " ,Draggable's Parent: " + draggable.transform.parent.name);
             //Debug.Log("Draggable's parent's parent name: " + draggableGrandparentName);
            
-            if(thisParentName == "InventoryGrid" && draggableGrandparentName == "ItemShopGrid") //It means it is really adding into the inventory and must bought!!
+            if(thisParentName == "FighterGrid" && draggableGrandparentName == "FighterShopGrid") //It means it is really adding into the inventory and must bought!!
             {
-                ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
-                if(itemBaseScript.item != null)
+                FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
+                if(fighterBaseScript.fighter != null)
                 {
                     Debug.Log("This slot is already filled!");
                     draggable.MoveToTheStartPosition();
                     return;
                 }
 
-                bool isEnoughCoinWeHave = CoinManager.instance.BuyItem(draggableItemBase.item);
+                bool isEnoughCoinWeHave = CoinManager.instance.BuyFighter(draggableFighterBase.fighter);
                 if(isEnoughCoinWeHave)
                 {
                     GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
                     Image image = childObject.GetComponentInChildren<Image>();                    
-                    itemBaseScript.item = draggableItemBase.item;
+                    fighterBaseScript.fighter = draggableFighterBase.fighter;
                     image.enabled = true;
-                    image.sprite = itemBaseScript.item.ItemSprite;
+                    image.sprite = fighterBaseScript.fighter.FighterSprite;
 
-                    draggableItemBase.item = null;
+                    draggableFighterBase.fighter = null;
                     Image draggableImage = draggable.gameObject.GetComponent<Image>();
                     if(draggableImage)
                     {
@@ -79,7 +79,7 @@ public class InventorySlot : MonoBehaviour
                         draggableImage.enabled = false;
                     }
 
-                    Destroy(draggableItemBase.item);
+                    Destroy(draggableFighterBase.fighter);
                 }else{
                     draggable.MoveToTheStartPosition();
                 }
