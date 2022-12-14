@@ -57,7 +57,7 @@ public class FighterSlot : MonoBehaviour
                 FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
                 if(fighterBaseScript.fighter != null)
                 {
-                    Debug.Log("This slot is already filled!");
+                    Debug.Log("This fighter slot is already filled!");
                     draggable.MoveToTheStartPosition();
                     return;
                 }

@@ -20,17 +20,17 @@ public class Fighter : ScriptableObject
 
 
     //#region Getters and Setters
-    public string FighterID { get; set; }
-    public string FighterName { get; set; }
-    public int FighterPrice { get ; set; }
-    public int FighterLevel { get ; set; }
-    public float FighterExperience {get; set;}
+    public string FighterID { get => fighterID; set => fighterID = value; }
+    public string FighterName { get => fighterName; set => fighterName = value; }
+    public int FighterPrice { get => fighterPrice; set => fighterPrice = value; }
+    public int FighterLevel{ get => fighterLevel; set => fighterLevel = value; }
+    public float FighterExperience { get => fighterExperience; set => fighterExperience = value; }
    // public Type FighterType {get; set;}
-    public Sprite FighterSprite { get; set; }
+    public Sprite FighterSprite { get => fighterSprite; set => fighterSprite = value; }
 
-    public int AttackPower {get; set;}
-    public int Armor{get; set;}
-    public int Strength {get; set;}
-    public int Agility{get; set;}
-    public int Intelligence{get;set;}
+    public int AttackPower { get => attackPower; set => attackPower = value; }
+    public int Armor { get => armor; set => armor = value; }
+    public int Strength { get => strength; set => strength = value; }
+    public int Agility { get => agility; set => agility = value; }
+    public int Intelligence { get => intelligence; set => intelligence = value; }
 }
