@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponSlot : InventorySlot
+public class WeaponSlot : ItemSlot
 {
 	protected override void Awake()
 	{

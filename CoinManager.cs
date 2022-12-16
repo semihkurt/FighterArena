@@ -25,7 +25,7 @@ public class CoinManager : MonoBehaviour
         coinText = GameObject.Find("UI/CoinUI/CoinText").GetComponent<TMP_Text>();
         if(coinText)
         {
-            Debug.Log("Coin is not null: " + _coin);
+            //Debug.Log("Coin is not null: " + _coin);
             coinText.text = _coin.ToString();
         }
     }

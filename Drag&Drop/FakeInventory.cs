@@ -15,7 +15,7 @@ public class FakeInventory : MonoBehaviour
 
 	private void InitializeItems()
 	{
-		var slots = inventoryItemsContainer.GetComponentsInChildren<InventorySlot>();
+		var slots = inventoryItemsContainer.GetComponentsInChildren<ItemSlot>();
 		foreach (var slot in slots)
 		{
 			var item = slot.GetComponentInChildren<DragDrop>();

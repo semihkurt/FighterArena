@@ -4,20 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class FighterSlot : MonoBehaviour
+public class FighterSlot : MonoBehaviour, IPointerClickHandler
 {
     protected DropArea dropArea;
 	private DisableDropCondition disableDropCondition;
 
     protected virtual void Awake() 
     {
-        //GameObject itemButtonGameObject = this.transform.GetChild(0).gameObject;
-        //icon = itemButtonGameObject.transform.GetChild(0).gameObject;
-        //Debug.Log("NAME: " + icon.name);
-
         dropArea = GetComponent<DropArea>() ?? gameObject.AddComponent<DropArea>();
 		dropArea.OnDropHandler += OnItemDropped;
-		//disableDropCondition = new DisableDropCondition();
+
     }
 
     public void Initialize(DragDrop currentItem)
@@ -33,13 +29,6 @@ public class FighterSlot : MonoBehaviour
 
     private void OnItemDropped(DragDrop draggable)
 	{
-       // Debug.Log("InventorySlot OnItemDropped");
-
-        //draggable.transform.position = this.transform.position;
-		//currentItem = draggable;
-		//dropArea.DropConditions.Add(disableDropCondition);
-		//draggable.OnBeginDragHandler += CurrentItemOnBeginDrag;
-
         FighterBase draggableFighterBase = null;
         draggableFighterBase = draggable.gameObject.GetComponent<FighterBase>();  
         if(draggableFighterBase)
@@ -48,9 +37,6 @@ public class FighterSlot : MonoBehaviour
 
             string draggableGrandparentName = draggable.transform.parent.parent.name;
             string thisParentName = parentGameObject.name;
-            //Debug.Log("This name: " + this.gameObject.name + " ,This' Parent : " + thisParentName);
-            //Debug.Log("Draggable name: " + draggable.name + " ,Draggable's Parent: " + draggable.transform.parent.name);
-            //Debug.Log("Draggable's parent's parent name: " + draggableGrandparentName);
            
             if(thisParentName == "FighterGrid" && draggableGrandparentName == "FighterShopGrid") //It means it is really adding into the inventory and must bought!!
             {
@@ -89,37 +75,21 @@ public class FighterSlot : MonoBehaviour
         }
 	}
 
-    public void UpdateSlot()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        /*if(Inventory.instance.itemList[transform.GetSiblingIndex()] != null)
+        if(this.gameObject.transform.parent.gameObject.name == "FighterGrid")
         {
-            //icon.GetComponent<Image>().sprite = Inventory.instance.itemList[transform.GetSiblingIndex()].icon;
-            //icon.SetActive(true);
-        }else
-        {
-            //icon.SetActive(false);
-        }*/
+            FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
+            if(fighterBaseScript.fighter != null)
+            {
+                GameObject fighterPageGameObject = FighterPageManager.instance.fighterPageGameObject;
+                fighterPageGameObject.SetActive(true);
+
+                Debug.Log("Fighter character info will be opened! " + fighterPageGameObject.name);
+                
+            }
+        }
+        //throw new System.NotImplementedException();
     }
 
-    //Current item is being dragged so we listen for the EndDrag event
-	/*private void CurrentItemOnBeginDrag(PointerEventData eventData)
-	{
-        Debug.Log("InventorySlot CurrentItemBeginOnDrag");
-		currentItem.OnEndDragHandler += CurrentItemEndDragHandler;
-	}*/
-
-	/*private void CurrentItemEndDragHandler(PointerEventData eventData, bool dropped)
-	{
-        Debug.Log("InventorySlot CurrentitemEndDrag");
-		currentItem.OnEndDragHandler -= CurrentItemEndDragHandler;
-
-		if (!dropped)
-		{
-			return;
-		}
-
-		dropArea.DropConditions.Remove(disableDropCondition); //We dropped the component in another slot so we can remove the DisableDropCondition
-		currentItem.OnBeginDragHandler -= CurrentItemOnBeginDrag; //We make sure to remove this listener as the item is no longer in this slot
-		currentItem = null; //We no longer have an item in this slot, so we remove the refference
-	}*/
 }

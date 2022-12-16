@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour
 {
     protected DropArea dropArea;
 	private DisableDropCondition disableDropCondition;

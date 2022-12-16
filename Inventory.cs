@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public List<Item> items = new List<Item>();
 
     public Item[] itemList = new Item[20];
-    public InventorySlot[] inventorySlots;
+    public ItemSlot[] itemSlots;
 
 
     void Awake() {
@@ -57,16 +57,16 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        inventorySlots = FindObjectsOfType<InventorySlot>();
+        itemSlots = FindObjectsOfType<ItemSlot>();
         UpdateSlotUI();
     }
    
     public void UpdateSlotUI()
     {
-        Debug.Log("UpdateSlotUI inventory slot amount:" + inventorySlots.Length);
-        for(int i = 0; i < inventorySlots.Length; i++)
+        Debug.Log("UpdateSlotUI item slot amount:" + itemSlots.Length);
+        for(int i = 0; i < itemSlots.Length; i++)
         {
-            inventorySlots[i].UpdateSlot();
+            itemSlots[i].UpdateSlot();
         }
     }
    

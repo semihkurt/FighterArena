@@ -43,7 +43,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         if(!CanDrag)
             return;
-        Debug.Log("DragDrop OnBeginDrag");
+        //Debug.Log("DragDrop OnBeginDrag");
         //canvasGroup.alpha = .6f;
         //canvasGroup.blocksRaycasts = false;
 
