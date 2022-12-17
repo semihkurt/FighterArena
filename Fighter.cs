@@ -17,7 +17,9 @@ public class Fighter : ScriptableObject
     [SerializeField] private int strength;
     [SerializeField] private int agility;
     [SerializeField] private int intelligence;
-
+    [SerializeField] private Item item1;
+    [SerializeField] private Item item2;
+    [SerializeField] private Item item3;
 
     //#region Getters and Setters
     public string FighterID { get => fighterID; set => fighterID = value; }
@@ -33,4 +35,8 @@ public class Fighter : ScriptableObject
     public int Strength { get => strength; set => strength = value; }
     public int Agility { get => agility; set => agility = value; }
     public int Intelligence { get => intelligence; set => intelligence = value; }
+
+    public Item Item1 { get => item1; set => item1 = value;}
+    public Item Item2 { get => item2; set => item2 = value;}
+    public Item Item3 { get => item3; set => item3 = value;}
 }

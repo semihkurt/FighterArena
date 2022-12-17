@@ -13,7 +13,6 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
     {
         dropArea = GetComponent<DropArea>() ?? gameObject.AddComponent<DropArea>();
 		dropArea.OnDropHandler += OnItemDropped;
-
     }
 
     public void Initialize(DragDrop currentItem)
@@ -85,11 +84,60 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                 GameObject fighterPageGameObject = FighterPageManager.instance.fighterPageGameObject;
                 fighterPageGameObject.SetActive(true);
 
+                FighterPage fighterPage = fighterPageGameObject.GetComponent<FighterPage>();
+                fighterPage.fighter = fighterBaseScript.fighter;
+                
+                FighterBase fighter = fighterPageGameObject.GetComponentInChildren<FighterBase>();
+                if(fighter == null)
+                {
+                    Debug.Log("Fighter is null");
+                    return;
+                }
+
+                fighter.fighter = fighterBaseScript.fighter;
+                Image fighterImage = fighter.gameObject.GetComponent<Image>();
+                if(fighterImage != null)
+                {
+                    fighterImage.sprite = fighter.fighter.FighterSprite;
+                    fighterImage.enabled = true;
+                }
+
+                ItemBase[] itemBaseArray = fighterPageGameObject.GetComponentsInChildren<ItemBase>();
+
+                ItemBase item1 = itemBaseArray[0];
+                ItemBase item2 = itemBaseArray[1];
+                ItemBase item3 = itemBaseArray[2];
+
+                item1.item = fighter.fighter.Item1;
+                item2.item = fighter.fighter.Item2;
+                item3.item = fighter.fighter.Item3;
+
+                fighterPage.item1 = fighter.fighter.Item1;
+                fighterPage.item2 = fighter.fighter.Item2;
+                fighterPage.item3 = fighter.fighter.Item3;
+
+                FillImage(item1);
+                FillImage(item2);
+                FillImage(item3);
+
                 Debug.Log("Fighter character info will be opened! " + fighterPageGameObject.name);
                 
             }
         }
         //throw new System.NotImplementedException();
+    }
+
+    private void FillImage(ItemBase itemBase)
+    {
+        if(itemBase.item != null)
+        {
+            Image itemImage = itemBase.gameObject.GetComponent<Image>();
+            if(itemImage != null)
+            {
+                itemImage.sprite = itemBase.item.ItemSprite;
+                itemImage.enabled = true;
+            }
+        }
     }
 
 }
