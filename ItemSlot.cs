@@ -89,17 +89,6 @@ public class ItemSlot : MonoBehaviour
         }
 	}
 
-    public void UpdateSlot()
-    {
-        /*if(Inventory.instance.itemList[transform.GetSiblingIndex()] != null)
-        {
-            //icon.GetComponent<Image>().sprite = Inventory.instance.itemList[transform.GetSiblingIndex()].icon;
-            //icon.SetActive(true);
-        }else
-        {
-            //icon.SetActive(false);
-        }*/
-    }
 
     //Current item is being dragged so we listen for the EndDrag event
 	/*private void CurrentItemOnBeginDrag(PointerEventData eventData)

@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 
         if(hasAdded)
         {
-            UpdateSlotUI();
+
         }
 
         /*if(!item.isDefaultItem)
@@ -58,16 +58,6 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         itemSlots = FindObjectsOfType<ItemSlot>();
-        UpdateSlotUI();
-    }
-   
-    public void UpdateSlotUI()
-    {
-        Debug.Log("UpdateSlotUI item slot amount:" + itemSlots.Length);
-        for(int i = 0; i < itemSlots.Length; i++)
-        {
-            itemSlots[i].UpdateSlot();
-        }
     }
    
    
