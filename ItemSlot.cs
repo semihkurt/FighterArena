@@ -11,10 +11,6 @@ public class ItemSlot : MonoBehaviour
 
     protected virtual void Awake() 
     {
-        //GameObject itemButtonGameObject = this.transform.GetChild(0).gameObject;
-        //icon = itemButtonGameObject.transform.GetChild(0).gameObject;
-        //Debug.Log("NAME: " + icon.name);
-
         dropArea = GetComponent<DropArea>() ?? gameObject.AddComponent<DropArea>();
 		dropArea.OnDropHandler += OnItemDropped;
 		//disableDropCondition = new DisableDropCondition();
@@ -33,13 +29,6 @@ public class ItemSlot : MonoBehaviour
 
     private void OnItemDropped(DragDrop draggable)
 	{
-       // Debug.Log("InventorySlot OnItemDropped");
-
-        //draggable.transform.position = this.transform.position;
-		//currentItem = draggable;
-		//dropArea.DropConditions.Add(disableDropCondition);
-		//draggable.OnBeginDragHandler += CurrentItemOnBeginDrag;
-
         ItemBase draggableItemBase = null;
         draggableItemBase = draggable.gameObject.GetComponent<ItemBase>();  
         if(draggableItemBase)
@@ -48,10 +37,8 @@ public class ItemSlot : MonoBehaviour
 
             string draggableGrandparentName = draggable.transform.parent.parent.name;
             string thisParentName = parentGameObject.name;
-            //Debug.Log("This name: " + this.gameObject.name + " ,This' Parent : " + thisParentName);
-            //Debug.Log("Draggable name: " + draggable.name + " ,Draggable's Parent: " + draggable.transform.parent.name);
-            //Debug.Log("Draggable's parent's parent name: " + draggableGrandparentName);
-           
+  
+            Debug.Log("Draggable grand parent name: " + draggableGrandparentName + " , thisParentName: " + thisParentName);
             if(thisParentName == "InventoryGrid" && draggableGrandparentName == "ItemShopGrid") //It means it is really adding into the inventory and must bought!!
             {
                 ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
@@ -83,12 +70,39 @@ public class ItemSlot : MonoBehaviour
                 }else{
                     draggable.MoveToTheStartPosition();
                 }
-            }else{ //Draggable item will be moved to anchor position
+            }else if(thisParentName == "FighterPage" && draggableGrandparentName == "InventoryGrid")
+            {
+                Debug.Log("Item is worn buy ");
+
+                ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
+                if(itemBaseScript.item != null)
+                {
+                    Debug.Log("This slot is already filled!");
+                    draggable.MoveToTheStartPosition();
+                    return;
+                }
+
+                GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
+                Image image = childObject.GetComponentInChildren<Image>();                    
+                itemBaseScript.item = draggableItemBase.item;
+                image.enabled = true;
+                image.sprite = itemBaseScript.item.ItemSprite;
+
+                draggableItemBase.item = null;
+                Image draggableImage = draggable.gameObject.GetComponent<Image>();
+                if(draggableImage)
+                {
+                    draggableImage.sprite = null;
+                    draggableImage.enabled = false;
+                }
+
+                Destroy(draggableItemBase.item);
+            }
+            else{ //Draggable item will be moved to anchor position
                 draggable.MoveToTheStartPosition();
             }
         }
 	}
-
 
     //Current item is being dragged so we listen for the EndDrag event
 	/*private void CurrentItemOnBeginDrag(PointerEventData eventData)
