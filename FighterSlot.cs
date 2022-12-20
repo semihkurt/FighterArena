@@ -50,6 +50,10 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                 bool isEnoughCoinWeHave = CoinManager.instance.BuyFighter(draggableFighterBase.fighter);
                 if(isEnoughCoinWeHave)
                 {
+                    //Fighter newFighter = new Fighter();
+                    //Fighter newFighter = (Fighter)ScriptableObject.CreateInstance(typeof(Fighter));
+                    //newFighter = fighterBaseScript.fighter;
+
                     GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
                     Image image = childObject.GetComponentInChildren<Image>();                    
                     fighterBaseScript.fighter = draggableFighterBase.fighter;
@@ -62,7 +66,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                     {
                         draggableImage.sprite = null;
                         draggableImage.enabled = false;
-                    }
+                    }                    
 
                     Destroy(draggableFighterBase.fighter);
                 }else{

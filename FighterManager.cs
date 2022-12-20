@@ -16,7 +16,7 @@ public class FighterManager : MonoBehaviour
         {
             Destroy(this);
         }
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     void Start()

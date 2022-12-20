@@ -5,18 +5,18 @@ public class Fighter : ScriptableObject
 {
     [SerializeField] private string fighterID;
     [SerializeField] private string fighterName;
-    [SerializeField] private int fighterLevel;
-    [SerializeField] private float fighterExperience;
-    [SerializeField] private int fighterPrice;
+    [SerializeField] private int fighterLevel = 1;
+    [SerializeField] private float fighterExperience = 0.0f;
+    [SerializeField] private int fighterPrice = 300;
     [SerializeField] enum Type { Warrior, Archer, Mage}
     [SerializeField] private Type type = Type.Warrior;
     [SerializeField] private Sprite fighterSprite;
 
-    [SerializeField] private int attackPower;
-    [SerializeField] private int armor;
-    [SerializeField] private int strength;
-    [SerializeField] private int agility;
-    [SerializeField] private int intelligence;
+    [SerializeField] private int attackPower = 40;
+    [SerializeField] private int armor = 15;
+    [SerializeField] private int strength = 10;
+    [SerializeField] private int agility = 10;
+    [SerializeField] private int intelligence = 10;
     [SerializeField] private Item item1;
     [SerializeField] private Item item2;
     [SerializeField] private Item item3;
@@ -39,4 +39,12 @@ public class Fighter : ScriptableObject
     public Item Item1 { get => item1; set => item1 = value;}
     public Item Item2 { get => item2; set => item2 = value;}
     public Item Item3 { get => item3; set => item3 = value;}
+
+    public void ResetData()
+    {
+
+        item1 = null;
+        item2 = null;
+        item3 = null;
+    }
 }

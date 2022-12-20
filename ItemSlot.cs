@@ -72,9 +72,10 @@ public class ItemSlot : MonoBehaviour
                 }
             }else if(thisParentName == "FighterPage" && draggableGrandparentName == "InventoryGrid")
             {
-                Debug.Log("Item is worn buy ");
+                Debug.Log("Item is worn by Fighter");
 
                 ItemBase itemBaseScript = this.gameObject.GetComponentInChildren<ItemBase>();
+                Debug.Log("This gameobject name: " + this.gameObject.name);
                 if(itemBaseScript.item != null)
                 {
                     Debug.Log("This slot is already filled!");
@@ -97,6 +98,8 @@ public class ItemSlot : MonoBehaviour
                 }
 
                 Destroy(draggableItemBase.item);
+                
+                FighterPageManager.instance.WearItemToFighter(itemBaseScript);
             }
             else{ //Draggable item will be moved to anchor position
                 draggable.MoveToTheStartPosition();
