@@ -7,7 +7,14 @@ public class ShopManager : MonoBehaviour
 {
     public GameObject itemShop;
     public GameObject fighterShop;
+    public FighterSlot[] fighterSlots;
+    public ItemSlot[] itemSlots;
 
+    private void Awake() {
+        fighterSlots = FindObjectsOfType<FighterSlot>();
+        itemSlots = FindObjectsOfType<ItemSlot>();
+
+    }
     // Start is called before the first frame update
     void Start()
     {

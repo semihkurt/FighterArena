@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class FighterBase : MonoBehaviour 
+[System.Serializable]
+public struct FighterInstance
 {
-        [SerializeField] public Fighter fighter;
+        Fighter fighter;
 
-        FighterBase(Fighter fighter)
+        FighterInstance(Fighter fighter)
         {
                 this.fighter = fighter;
         }

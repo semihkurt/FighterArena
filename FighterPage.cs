@@ -29,7 +29,7 @@ public class FighterPage : MonoBehaviour
         item2 = null;
         item3 = null;
 
-        FighterBase fighterBase = this.GetComponentInChildren<FighterBase>();
+        /*FighterBase fighterBase = this.GetComponentInChildren<FighterBase>();
         fighterBase.fighter = null;
         Image fighterImage = fighterBase.gameObject.GetComponent<Image>();
         if(fighterImage != null)
@@ -44,7 +44,7 @@ public class FighterPage : MonoBehaviour
         DisableImage(itemBaseArray[1]);
         DisableImage(itemBaseArray[2]);
 
-        this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);*/
     }
 
     private void DisableImage(ItemBase itemBase)

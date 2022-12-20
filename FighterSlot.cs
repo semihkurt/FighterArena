@@ -9,6 +9,8 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
     protected DropArea dropArea;
 	private DisableDropCondition disableDropCondition;
 
+    public FighterInstance fighterInstance;
+
     protected virtual void Awake() 
     {
         dropArea = GetComponent<DropArea>() ?? gameObject.AddComponent<DropArea>();
@@ -28,7 +30,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
 
     private void OnItemDropped(DragDrop draggable)
 	{
-        FighterBase draggableFighterBase = null;
+        /*FighterBase draggableFighterBase = null;
         draggableFighterBase = draggable.gameObject.GetComponent<FighterBase>();  
         if(draggableFighterBase)
         {
@@ -75,14 +77,14 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
             }else{ //Draggable item will be moved to anchor position
                 draggable.MoveToTheStartPosition();
             }
-        }
+        }*/
 	}
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if(this.gameObject.transform.parent.gameObject.name == "FighterGrid")
         {
-            FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
+            /*FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
             if(fighterBaseScript.fighter != null)
             {
                 GameObject fighterPageGameObject = FighterPageManager.instance.fighterPageGameObject;
@@ -126,7 +128,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
 
                 Debug.Log("Fighter character info will be opened! " + fighterPageGameObject.name);
                 
-            }
+            }*/
         }
         //throw new System.NotImplementedException();
     }

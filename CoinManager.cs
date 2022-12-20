@@ -48,7 +48,7 @@ public class CoinManager : MonoBehaviour
 
     public bool BuyItem(Item item)
     {
-        Debug.Log("We have: " + _coin + " in our pockets, and item " + item.ItemName + " costs us: " + item.ItemPrice);            
+        Debug.Log("We have: " + _coin + " in our pockets, and item " + item.ItemName + " costs us: " + item.ItemPrice);
         if(_coin > item.ItemPrice)
         {
             _coin -= item.ItemPrice;

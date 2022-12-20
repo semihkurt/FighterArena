@@ -25,7 +25,7 @@ public class FighterPageManager : MonoBehaviour
             if(fighterPage != null)
             {
                 //Debug.Log("Fighter page is not null");
-                FighterBase fighterBase = fighterPage.GetComponentInChildren<FighterBase>();
+                /*FighterBase fighterBase = fighterPage.GetComponentInChildren<FighterBase>();
                 if(fighterBase != null)
                 {
                     //Debug.Log("Fighter base is not null");
@@ -50,7 +50,7 @@ public class FighterPageManager : MonoBehaviour
                         } 
                                                            
                     }   
-                }    
+                }  */  
             }         
         }
     }
