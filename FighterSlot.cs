@@ -9,7 +9,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
     protected DropArea dropArea;
 	private DisableDropCondition disableDropCondition;
 
-    public FighterInstance fighterInstance;
+    public FighterBase fighterBase;
 
     protected virtual void Awake() 
     {
@@ -30,7 +30,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
 
     private void OnItemDropped(DragDrop draggable)
 	{
-        /*FighterBase draggableFighterBase = null;
+        FighterBase draggableFighterBase = null;
         draggableFighterBase = draggable.gameObject.GetComponent<FighterBase>();  
         if(draggableFighterBase)
         {
@@ -41,24 +41,22 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
            
             if(thisParentName == "FighterGrid" && draggableGrandparentName == "FighterShopGrid") //It means it is really adding into the inventory and must bought!!
             {
-                FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
+                FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();                
                 if(fighterBaseScript.fighter != null)
                 {
                     Debug.Log("This fighter slot is already filled!");
                     draggable.MoveToTheStartPosition();
                     return;
                 }
-
+     
                 bool isEnoughCoinWeHave = CoinManager.instance.BuyFighter(draggableFighterBase.fighter);
                 if(isEnoughCoinWeHave)
                 {
-                    //Fighter newFighter = new Fighter();
-                    //Fighter newFighter = (Fighter)ScriptableObject.CreateInstance(typeof(Fighter));
-                    //newFighter = fighterBaseScript.fighter;
 
                     GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
-                    Image image = childObject.GetComponentInChildren<Image>();                    
-                    fighterBaseScript.fighter = draggableFighterBase.fighter;
+                    Image image = childObject.GetComponentInChildren<Image>();
+
+                    fighterBaseScript.copy(draggableFighterBase.fighter);
                     image.enabled = true;
                     image.sprite = fighterBaseScript.fighter.FighterSprite;
 
@@ -77,26 +75,26 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
             }else{ //Draggable item will be moved to anchor position
                 draggable.MoveToTheStartPosition();
             }
-        }*/
+        }
 	}
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if(this.gameObject.transform.parent.gameObject.name == "FighterGrid")
         {
-            /*FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
+            FighterBase fighterBaseScript = this.gameObject.GetComponentInChildren<FighterBase>();
             if(fighterBaseScript.fighter != null)
             {
                 GameObject fighterPageGameObject = FighterPageManager.instance.fighterPageGameObject;
+                FighterPage fighterPage = fighterPageGameObject.GetComponent<FighterPage>();
+                fighterPage.CloseButtonClicked(); //Reset everything on UI.
                 fighterPageGameObject.SetActive(true);
 
-                FighterPage fighterPage = fighterPageGameObject.GetComponent<FighterPage>();
                 fighterPage.fighter = fighterBaseScript.fighter;
-                
                 FighterBase fighter = fighterPageGameObject.GetComponentInChildren<FighterBase>();
                 if(fighter == null)
                 {
-                    Debug.Log("Fighter is null");
+                    Debug.Log("FighterBase script is null under FighterPage GameObject");
                     return;
                 }
 
@@ -114,13 +112,13 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                 ItemBase item2 = itemBaseArray[1];
                 ItemBase item3 = itemBaseArray[2];
 
-                item1.item = fighter.fighter.Item1;
-                item2.item = fighter.fighter.Item2;
-                item3.item = fighter.fighter.Item3;
+                item1.item = fighterBaseScript.fighter.Item1;
+                item2.item = fighterBaseScript.fighter.Item2;
+                item3.item = fighterBaseScript.fighter.Item3;
 
-                fighterPage.item1 = fighter.fighter.Item1;
-                fighterPage.item2 = fighter.fighter.Item2;
-                fighterPage.item3 = fighter.fighter.Item3;
+                fighterPage.item1 = fighterBaseScript.fighter.Item1;
+                fighterPage.item2 = fighterBaseScript.fighter.Item2;
+                fighterPage.item3 = fighterBaseScript.fighter.Item3;
 
                 FillImage(item1);
                 FillImage(item2);
@@ -128,7 +126,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
 
                 Debug.Log("Fighter character info will be opened! " + fighterPageGameObject.name);
                 
-            }*/
+            }
         }
         //throw new System.NotImplementedException();
     }
@@ -137,9 +135,11 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
     {
         if(itemBase.item != null)
         {
+            //Debug.Log("Item  is not null");
             Image itemImage = itemBase.gameObject.GetComponent<Image>();
             if(itemImage != null)
             {
+                //Debug.Log("Item Image is not null");
                 itemImage.sprite = itemBase.item.ItemSprite;
                 itemImage.enabled = true;
             }

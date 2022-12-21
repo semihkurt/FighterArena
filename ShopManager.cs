@@ -10,9 +10,14 @@ public class ShopManager : MonoBehaviour
     public FighterSlot[] fighterSlots;
     public ItemSlot[] itemSlots;
 
+    public FighterBase[] fighterBases;
+
     private void Awake() {
         fighterSlots = FindObjectsOfType<FighterSlot>();
         itemSlots = FindObjectsOfType<ItemSlot>();
+
+        fighterBases = new FighterBase[fighterSlots.Length];
+
 
     }
     // Start is called before the first frame update

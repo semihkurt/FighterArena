@@ -5,7 +5,7 @@ using UnityEngine;
 public class FighterManager : MonoBehaviour
 {
     public static FighterManager instance;
-    public List<FighterInstance> fighters = new List<FighterInstance>();
+    public List<FighterBase> fighters = new List<FighterBase>();
     public FighterSlot[] fighterSlots;
 
     // Start is called before the first frame update
@@ -24,12 +24,12 @@ public class FighterManager : MonoBehaviour
         fighterSlots = FindObjectsOfType<FighterSlot>();
     }
 
-    public void Add(FighterInstance fighter)
+    public void Add(FighterBase fighter)
     {
         fighters.Add(fighter);
     }
 
-    public void Remove(FighterInstance fighter)
+    public void Remove(FighterBase fighter)
     {
         fighters.Remove(fighter);
     }
