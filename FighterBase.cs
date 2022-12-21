@@ -13,7 +13,7 @@ public class FighterBase : MonoBehaviour
                 this.fighter = fighter;
         }
 
-        public void copy(Fighter pFighter)
+        public void DeepCopy(Fighter pFighter)
         {
                 if(fighter == null)
                 {

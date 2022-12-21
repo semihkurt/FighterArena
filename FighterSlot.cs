@@ -7,9 +7,6 @@ using UnityEngine.EventSystems;
 public class FighterSlot : MonoBehaviour, IPointerClickHandler
 {
     protected DropArea dropArea;
-	private DisableDropCondition disableDropCondition;
-
-    public FighterBase fighterBase;
 
     protected virtual void Awake() 
     {
@@ -56,7 +53,7 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                     GameObject childObject = this.gameObject.transform.GetChild(0).gameObject;
                     Image image = childObject.GetComponentInChildren<Image>();
 
-                    fighterBaseScript.copy(draggableFighterBase.fighter);
+                    fighterBaseScript.DeepCopy(draggableFighterBase.fighter);
                     image.enabled = true;
                     image.sprite = fighterBaseScript.fighter.FighterSprite;
 
@@ -67,6 +64,9 @@ public class FighterSlot : MonoBehaviour, IPointerClickHandler
                         draggableImage.sprite = null;
                         draggableImage.enabled = false;
                     }                    
+
+                    FighterSlot slot = this.gameObject.GetComponent<FighterSlot>();
+                    FighterManager.instance.Add(fighterBaseScript.fighter, slot);
 
                     Destroy(draggableFighterBase.fighter);
                 }else{
