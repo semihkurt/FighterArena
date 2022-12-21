@@ -51,7 +51,7 @@ public class FighterManager : MonoBehaviour
             Debug.Log("Fighter slot index returned null!!");
     }
 
-    public void Remove(Fighter fighter, int index)
+    public void Remove(int index)
     {
         Destroy(fighters[index]);
     }

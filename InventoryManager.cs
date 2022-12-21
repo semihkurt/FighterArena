@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance;
 
-    public List<Item> items = new List<Item>();
+    public Item[] items;
 
     public ItemSlot[] itemSlots;
 
@@ -19,20 +19,54 @@ public class InventoryManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
     }
-    
-    public void Add(Item item)
+    public int getIndex(ItemSlot pSlot)
     {
-        items.Add(item);
+        if(pSlot != null)
+        {
+            for(int i = 0; i < itemSlots.Length; i++)
+            {
+                if(pSlot == itemSlots[i])
+                    return i;
+            }
+        }else{
+            Debug.Log("pSlot is null");
+        }
+        return -1;
     }
 
-    public void Remove(Item item)
+    public void Add(Item item,int index)
     {
-        items.Remove(item);
+        items[index] = item;
+    }
+
+    public void Add(Item item,ItemSlot pSlot)
+    {
+        int index = getIndex(pSlot);
+        if(index != -1)
+            items[index] = item;
+        else
+            Debug.Log("Item slot index returned null while adding!!");
+    }
+
+    public void Remove(ItemSlot pSlot)
+    {
+        int index = getIndex(pSlot);
+        if(index != -1)
+            items[index] = null;
+        else
+           Debug.Log("Item slot index returned null while removing!!"); 
+    }
+
+    public void Remove(int index)
+    {
+        items[index] = null;
     }
 
     void Start()
     {
         itemSlots = FindObjectsOfType<ItemSlot>();
+        items = new Item[itemSlots.Length];
+
     }
    
    

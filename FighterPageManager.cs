@@ -17,6 +17,43 @@ public class FighterPageManager : MonoBehaviour
         //DontDestroyOnLoad(this);
     }
 
+    public void RemoveItemFromFighter(ItemBase itemBase)
+    {
+        if(fighterPageGameObject != null)
+        {
+            FighterPage fighterPage = fighterPageGameObject.GetComponent<FighterPage>();
+            if(fighterPage != null)
+            {
+                //Debug.Log("Fighter page is not null");
+                FighterBase fighterBase = fighterPage.GetComponentInChildren<FighterBase>();
+                if(fighterBase != null)
+                {
+                    //Debug.Log("Fighter base is not null");
+                    if(fighterBase.fighter != null)
+                    {
+                        //Debug.Log("Fighter is not null");   
+                        ItemBase[] itemBaseArray = fighterPageGameObject.GetComponentsInChildren<ItemBase>();
+                        if(itemBaseArray[0] == itemBase)
+                        {      
+                            Debug.Log("Fighter removes item1: " + itemBase.item);  
+                            fighterBase.fighter.Item1 = null;
+                        }
+                        else if(itemBaseArray[1] == itemBase)
+                        {                         
+                            Debug.Log("Fighter removes item2: " + itemBase.item);
+                            fighterBase.fighter.Item2 = null;  
+                        }
+                        else if(itemBaseArray[2] == itemBase)
+                        {
+                            Debug.Log("Fighter removes item3: " + itemBase.item);  
+                            fighterBase.fighter.Item3 = null;
+                        }                                  
+                    }   
+                }   
+            }         
+        }
+    }
+
     public void WearItemToFighter(ItemBase itemBase)
     {     
         if(fighterPageGameObject != null)

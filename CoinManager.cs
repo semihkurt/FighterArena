@@ -53,7 +53,7 @@ public class CoinManager : MonoBehaviour
         {
             _coin -= item.ItemPrice;
             coinText.text = _coin.ToString();
-            InventoryManager.instance.Add(item);
+            //InventoryManager.instance.Add(item);
             return true;
         }
         return false;
