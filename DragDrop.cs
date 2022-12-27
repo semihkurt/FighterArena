@@ -10,7 +10,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public event System.Action<PointerEventData> OnBeginDragHandler;
 
-    public event System.Action<PointerEventData> OnDragHandler;
+    //public event System.Action<PointerEventData> OnDragHandler;
 
     public event System.Action<PointerEventData, bool> OnEndDragHandler;
 

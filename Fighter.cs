@@ -8,8 +8,8 @@ public class Fighter : ScriptableObject
     [SerializeField] private int fighterLevel = 1;
     [SerializeField] private float fighterExperience = 0.0f;
     [SerializeField] private int fighterPrice = 300;
-    [SerializeField] enum Type { Warrior, Archer, Mage}
-    [SerializeField] private Type type = Type.Warrior;
+    //[SerializeField] enum Type { Warrior, Archer, Mage}
+    //[SerializeField] private Type type = Type.Warrior;
     [SerializeField] private Sprite fighterSprite;
 
     [SerializeField] private int attackPower = 40;

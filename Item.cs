@@ -7,8 +7,8 @@ public class Item : ScriptableObject
     [SerializeField] private string itemName;
     [SerializeField] private int itemLevel;
     [SerializeField] private int itemPrice;
-    [SerializeField] enum Type { Default, Consumable, Weapon, Armor}
-    [SerializeField] Type type = Type.Default;
+    //[SerializeField] enum Type { Default, Consumable, Weapon, Armor}
+    //[SerializeField] Type type = Type.Default;
     [SerializeField] private Sprite itemSprite;
 
     //#region Getters and Setters
